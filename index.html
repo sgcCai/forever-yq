@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>给特别的你</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            font-family: "Microsoft YaHei", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5e9dc;
+            perspective: 2000px;
+        }
+        
+        .letter-container {
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            height: 80vh;
+            z-index: 10;
+        }
+        
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            background: #fff9f0;
+            border-radius: 2px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #5a4a3a;
+            transform-origin: left center;
+            transition: transform 1s ease-in-out;
+            backface-visibility: hidden;
+            border: 1px solid #e0d5c8;
+            overflow: hidden;
+        }
+        
+        .page-content {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background: linear-gradient(to bottom, transparent 95%, rgba(0,0,0,0.05) 100%);
+            background-size: 100% 30px;
+            line-height: 30px;
+            position: relative;
+        }
+        
+        .page-content::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 30px;
+            background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+        
+        .page-content::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 30px;
+            background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+        
+        .page.active {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+        
+        .page.next {
+            z-index: 1;
+            transform: rotateY(-180deg);
+        }
+        
+        .page.exit {
+            animation: pageExit 1s forwards;
+        }
+        
+        @keyframes pageExit {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(180deg); }
+        }
+        
+        .text-line {
+            margin: 15px 0;
+            min-height: 1.8em;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            text-align: left;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .text-line::before {
+            content: "❤";
+            position: absolute;
+            left: 10px;
+            color: #e67e7e;
+            font-size: 14px;
+        }
+        
+        .char {
+            opacity: 0;
+            transform: translateY(10px);
+            display: inline-block;
+        }
+        
+        .char.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.3s ease-out;
+        }
+        
+        .heart {
+            color: #e67e7e;
+            font-size: 40px;
+            margin: 20px 0;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s ease-out;
+        }
+        
+        .heart.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .date {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 14px;
+            color: #a08a72;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #5a4a3a;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .greeting::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #e67e7e, transparent);
+        }
+        
+        /* 信纸纹理 */
+        .paper-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23e0d5c8" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.3"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        /* 音乐控制 */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0d5c8;
+        }
+        
+        /* 按钮样式 */
+        .final-btn {
+            margin-top: 30px;
+            padding: 10px 25px;
+            background: #e67e7e;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease-out;
+        }
+        
+        .final-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .final-btn:hover {
+            background: #d46a6a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 信封效果 */
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #e8c9b1;
+            border-radius: 5px;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: all 1s ease-in-out;
+        }
+        
+        .envelope.flap {
+            transform-origin: top;
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-content {
+            text-align: center;
+            color: #5a4a3a;
+        }
+        
+        .envelope-heart {
+            font-size: 50px;
+            color: #e67e7e;
+            margin-bottom: 20px;
+            animation: beat 1s infinite alternate;
+        }
+        
+        @keyframes beat {
+            to { transform: scale(1.1); }
+        }
+        
+        .open-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: #e67e7e;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .open-btn:hover {
+            background: #d46a6a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 信纸折痕效果 */
+        .fold-line {
+            position: absolute;
+            height: 100%;
+            width: 2px;
+            background: rgba(0, 0, 0, 0.05);
+            left: 20px;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="letter-container">
+        <!-- 信封 -->
+        <div class="envelope" id="envelope">
+            <div class="envelope-content">
+                <div class="envelope-heart">❤</div>
+                <h2>致我最亲爱的你</h2>
+                <button class="open-btn" onclick="openEnvelope()">打开信封</button>
+            </div>
+        </div>
+        
+        <!-- 页面1 -->
+        <div class="page" id="page1">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="date" id="page1-date"></div>
+            <div class="page-content">
+                <div class="greeting" id="page1-greeting"></div>
+                <div class="text-line" id="page1-text1"></div>
+            </div>
+        </div>
+        
+        <!-- 页面2 -->
+        <div class="page" id="page2">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page2-text1"></div>
+                <div class="text-line" id="page2-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面3 -->
+        <div class="page" id="page3">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page3-text1"></div>
+                <div class="text-line" id="page3-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面4 -->
+        <div class="page" id="page4">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page4-text1"></div>
+                <div class="text-line" id="page4-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面5 -->
+        <div class="page" id="page5">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page5-text1"></div>
+                <div class="text-line" id="page5-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面6 -->
+        <div class="page" id="page6">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page6-text1"></div>
+                <div class="text-line" id="page6-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面7 -->
+        <div class="page" id="page7">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page7-text1"></div>
+                <div class="text-line" id="page7-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面8 -->
+        <div class="page" id="page8">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page8-text1"></div>
+                <div class="text-line" id="page8-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面9 -->
+        <div class="page" id="page9">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page9-text1"></div>
+                <div class="text-line" id="page9-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面10 -->
+        <div class="page" id="page10">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="text-line" id="page10-text1"></div>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <button class="final-btn" id="yes-btn" onclick="showResponse('yes')"></button>
+                    <button class="final-btn" id="no-btn" onclick="showResponse('no')"></button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页面11 - 愿意 -->
+        <div class="page" id="page11">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="heart" id="page11-heart">❤</div>
+                <div class="text-line" id="page11-text1"></div>
+                <div class="text-line" id="page11-text2"></div>
+            </div>
+        </div>
+        
+        <!-- 页面12 - 考虑一下 -->
+        <div class="page" id="page12">
+            <div class="paper-texture"></div>
+            <div class="fold-line"></div>
+            <div class="page-content">
+                <div class="heart" id="page12-heart">❤</div>
+                <div class="text-line" id="page12-text1"></div>
+                <div class="text-line" id="page12-text2"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="music-control" onclick="toggleMusic()">
+        <span id="music-icon">♪</span>
+    </div>
+    
+    <!-- 修改这里使用本地音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        <!-- 如果浏览器不支持MP3，可以添加其他格式 -->
+        <source src="music.ogg" type="audio/ogg">
+        您的浏览器不支持音频元素。
+    </audio>
+    
+    <script>
+        // 页面内容配置
+        const pageContents = {
+            1: {
+                date: getCurrentDate(),
+                greeting: "亲爱的",
+                text1: "我有些话想对你说..."
+            },
+            2: {
+                text1: "从遇见你的那一刻起",
+                text2: "我的心就不再属于我自己"
+            },
+            3: {
+                text1: "你的笑容像阳光",
+                text2: "照亮了我生活的每一个角落"
+            },
+            4: {
+                text1: "和你在一起的每一秒",
+                text2: "都是我生命中最美好的时光"
+            },
+            5: {
+                text1: "我想牵着你的手",
+                text2: "走过春夏秋冬，看遍世间美景"
+            },
+            6: {
+                text1: "你的眼睛里有星辰大海",
+                text2: "让我沉醉其中无法自拔"
+            },
+            7: {
+                text1: "你的声音是最动听的旋律",
+                text2: "在我心中不断回响"
+            },
+            8: {
+                text1: "我想每天醒来第一眼",
+                text2: "看到的就是你的笑脸"
+            },
+            9: {
+                text1: "我想和你一起",
+                text2: "创造属于我们的美好回忆"
+            },
+            10: {
+                text1: "你愿意成为我的女朋友吗？",
+                btnYes: "愿意",
+                btnNo: "考虑一下"
+            },
+            11: {
+                heart: "❤",
+                text1: "太开心了！",
+                text2: "我会用一生的时间来珍惜你 ❤"
+            },
+            12: {
+                heart: "❤",
+                text1: "我会耐心等待",
+                text2: "希望有一天能听到你肯定的答案"
+            }
+        };
+
+        let currentPage = 1;
+        const totalPages = 10;
+        let textAnimationTimeout;
+        let pageTimeout;
+        const bgMusic = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+        let typingInterval = 80; // 每个字出现的时间间隔(毫秒)
+        let lineInterval = 500; // 每行之间的间隔(毫秒)
+        let pageDelay = 3000;   // 页面停留时间(毫秒)
+        
+        // 获取当前日期
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            return `${year}年${month}月${day}日`;
+        }
+        
+        // 打开信封
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('flap');
+            
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                document.getElementById('page1').classList.add('active');
+                showPageContent(1);
+            }, 1000);
+        }
+        
+        // 逐字显示文本
+        function typeWriter(element, text, callback) {
+            let i = 0;
+            element.innerHTML = ''; // 清空原有内容
+            
+            function type() {
+                if (i < text.length) {
+                    // 创建字符元素
+                    const charSpan = document.createElement('span');
+                    charSpan.className = 'char';
+                    charSpan.textContent = text.charAt(i);
+                    element.appendChild(charSpan);
+                    
+                    // 显示字符动画
+                    setTimeout(() => {
+                        charSpan.classList.add('show');
+                    }, 10);
+                    
+                    i++;
+                    setTimeout(type, typingInterval);
+                } else {
+                    // 文本显示完成，执行回调
+                    if (callback) callback();
+                }
+            }
+            
+            type();
+        }
+        
+        // 显示页面内容
+        function showPageContent(pageNum) {
+            const pageContent = pageContents[pageNum];
+            const page = document.getElementById(`page${pageNum}`);
+            
+            // 显示日期
+            const date = page.querySelector('.date');
+            if (date && pageContent.date) {
+                date.textContent = pageContent.date;
+            }
+            
+            // 显示问候语
+            const greeting = page.querySelector('.greeting');
+            if (greeting && pageContent.greeting) {
+                typeWriter(greeting, pageContent.greeting);
+            }
+            
+            // 显示爱心
+            const heart = page.querySelector('.heart');
+            if (heart && pageContent.heart) {
+                heart.innerHTML = pageContent.heart;
+                setTimeout(() => {
+                    heart.classList.add('show');
+                }, 100);
+            }
+            
+            // 显示文本行
+            const text1 = page.querySelector('#page'+pageNum+'-text1');
+            if (text1 && pageContent.text1) {
+                setTimeout(() => {
+                    typeWriter(text1, pageContent.text1, () => {
+                        const text2 = page.querySelector('#page'+pageNum+'-text2');
+                        if (text2 && pageContent.text2) {
+                            setTimeout(() => {
+                                typeWriter(text2, pageContent.text2, () => {
+                                    // 最后一页不自动翻页
+                                    if (pageNum < totalPages) {
+                                        pageTimeout = setTimeout(() => {
+                                            nextPage();
+                                        }, pageDelay);
+                                    }
+                                });
+                            }, lineInterval);
+                        } else if (pageNum < totalPages) {
+                            pageTimeout = setTimeout(() => {
+                                nextPage();
+                            }, pageDelay);
+                        }
+                    });
+                }, greeting ? 500 : 0);
+            }
+            
+            // 显示按钮
+            const yesBtn = page.querySelector('#yes-btn');
+            if (yesBtn && pageContent.btnYes) {
+                typeWriter(yesBtn, pageContent.btnYes);
+                setTimeout(() => {
+                    yesBtn.classList.add('show');
+                }, 1000);
+            }
+            
+            const noBtn = page.querySelector('#no-btn');
+            if (noBtn && pageContent.btnNo) {
+                typeWriter(noBtn, pageContent.btnNo);
+                setTimeout(() => {
+                    noBtn.classList.add('show');
+                }, 1200);
+            }
+        }
+        
+        // 下一页
+        function nextPage() {
+            if (currentPage < totalPages) {
+                const currentPageEl = document.getElementById(`page${currentPage}`);
+                currentPageEl.classList.add('exit');
+                
+                setTimeout(() => {
+                    currentPageEl.classList.remove('active', 'exit');
+                    currentPage++;
+                    const nextPageEl = document.getElementById(`page${currentPage}`);
+                    nextPageEl.classList.add('active');
+                    showPageContent(currentPage);
+                }, 1000);
+            }
+        }
+        
+        // 显示回应
+        function showResponse(response) {
+            const currentPageEl = document.getElementById(`page${currentPage}`);
+            currentPageEl.classList.add('exit');
+            
+            setTimeout(() => {
+                currentPageEl.classList.remove('active', 'exit');
+                if (response === 'yes') {
+                    currentPage = totalPages + 1;
+                } else {
+                    currentPage = totalPages + 2;
+                }
+                const responsePageEl = document.getElementById(`page${currentPage}`);
+                responsePageEl.classList.add('active');
+                showPageContent(currentPage);
+            }, 1000);
+        }
+        
+        // 切换音乐
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.textContent = '♪';
+            } else {
+                bgMusic.play().catch(e => {
+                    alert('请点击确认后，再次点击音乐按钮播放');
+                });
+                musicIcon.textContent = '♫';
+            }
+            isPlaying = !isPlaying;
+        }
+        
+        // 初始化
+        window.onload = function() {
+            // 微信中可能需要用户交互后才能播放音乐
+            document.addEventListener('touchstart', function() {
+                if (!bgMusic.played) {
+                    bgMusic.play().then(() => {
+                        bgMusic.pause();
+                        isPlaying = false;
+                        musicIcon.textContent = '♪';
+                    }).catch(() => {});
+                }
+            }, { once: true });
+        };
+    </script>
+</body>
+</html>
