@@ -15,690 +15,811 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f5e9dc;
-            perspective: 2000px;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            perspective: 1000px;
         }
-        
-        .letter-container {
+
+        .container {
             position: relative;
             width: 90%;
             max-width: 500px;
             height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             z-index: 10;
         }
-        
+
         .page {
             position: absolute;
             width: 100%;
             height: 100%;
-            padding: 30px;
+            padding: 20px;
             box-sizing: border-box;
-            background: #fff9f0;
-            border-radius: 2px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.2); /* 更透明的背景 */
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 18px;
-            line-height: 1.8;
-            color: #5a4a3a;
-            transform-origin: left center;
-            transition: transform 1s ease-in-out;
+            font-size: 20px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: rotateY(180deg) scale(0.8);
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             backface-visibility: hidden;
-            border: 1px solid #e0d5c8;
-            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3); /* 更柔和的阴影 */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px); /* 更强的模糊效果 */
         }
-        
-        .page-content {
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            background: linear-gradient(to bottom, transparent 95%, rgba(0,0,0,0.05) 100%);
-            background-size: 100% 30px;
-            line-height: 30px;
-            position: relative;
-        }
-        
-        .page-content::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 30px;
-            background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-            pointer-events: none;
-        }
-        
-        .page-content::after {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 30px;
-            background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-            pointer-events: none;
-        }
-        
+
         .page.active {
-            z-index: 2;
-            transform: rotateY(0deg);
+            opacity: 1;
+            transform: rotateY(0deg) scale(1);
         }
-        
-        .page.next {
-            z-index: 1;
-            transform: rotateY(-180deg);
-        }
-        
+
         .page.exit {
             animation: pageExit 1s forwards;
         }
-        
+
         @keyframes pageExit {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(180deg); }
+            0% { transform: scale(1) rotateY(0deg); opacity: 1; }
+            100% { transform: scale(0.5) rotateY(180deg); opacity: 0; }
         }
-        
+
         .text-line {
-            margin: 15px 0;
-            min-height: 1.8em;
+            margin: 10px 0;
+            min-height: 1.6em;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            text-align: left;
-            padding-left: 40px;
-            position: relative;
         }
-        
-        .text-line::before {
-            content: "❤";
-            position: absolute;
-            left: 10px;
-            color: #e67e7e;
-            font-size: 14px;
-        }
-        
+
         .char {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(20px);
             display: inline-block;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* 文字阴影增强可读性 */
         }
-        
+
         .char.show {
             opacity: 1;
             transform: translateY(0);
             transition: all 0.3s ease-out;
         }
-        
+
         .heart {
-            color: #e67e7e;
+            color: #ff69b4;
             font-size: 40px;
-            margin: 20px 0;
+            margin: 15px 0;
+            animation: beat 1s infinite alternate, glow 2s infinite alternate;
+            text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
             opacity: 0;
             transform: scale(0);
             transition: all 0.5s ease-out;
         }
-        
+
         .heart.show {
             opacity: 1;
             transform: scale(1);
         }
-        
-        .date {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 14px;
-            color: #a08a72;
+
+        @keyframes beat {
+            to { transform: scale(1.2); }
         }
-        
-        .greeting {
-            font-size: 24px;
-            margin-bottom: 30px;
-            color: #5a4a3a;
-            font-weight: bold;
-            position: relative;
-            display: inline-block;
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493; }
+            to { text-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1493, 0 0 40px #ff1493; }
         }
-        
-        .greeting::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #e67e7e, transparent);
-        }
-        
-        /* 信纸纹理 */
-        .paper-texture {
-            position: absolute;
+
+        /* 星空背景 */
+        #stars {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23e0d5c8" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.3"/></svg>');
-            opacity: 0.3;
-            pointer-events: none;
+            z-index: 1;
         }
-        
-        /* 音乐控制 */
+
+        /* 流光背景 - 更透明 */
+        #light-beam {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,
+            rgba(255, 105, 180, 0.05) 0%,
+            rgba(255, 20, 147, 0.1) 20%,
+            rgba(148, 0, 211, 0.1) 40%,
+            rgba(75, 0, 130, 0.1) 60%,
+            rgba(0, 191, 255, 0.1) 80%,
+            rgba(255, 105, 180, 0.05) 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+            z-index: 2;
+            opacity: 0.5;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 爱心气泡 - 更透明 */
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background-color: rgba(255, 105, 180, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatUp 15s linear infinite;
+            z-index: 3;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         .music-control {
             position: fixed;
             bottom: 20px;
             right: 20px;
             width: 45px;
             height: 45px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 100;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e0d5c8;
-        }
-        
-        /* 按钮样式 */
-        .final-btn {
-            margin-top: 30px;
-            padding: 10px 25px;
-            background: #e67e7e;
-            border: none;
-            border-radius: 20px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
             transition: all 0.3s;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease-out;
         }
-        
-        .final-btn.show {
-            opacity: 1;
-            transform: translateY(0);
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(255, 105, 180, 0.25);
         }
-        
-        .final-btn:hover {
-            background: #d46a6a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* 信封效果 */
-        .envelope {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #e8c9b1;
-            border-radius: 5px;
-            z-index: 5;
+
+        h2 {
+            margin: 10px 0;
+            color: #ff69b4;
+            text-shadow: 0 0 5px rgba(255, 105, 180, 0.7);
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform-style: preserve-3d;
-            transition: all 1s ease-in-out;
+            flex-wrap: wrap;
         }
-        
-        .envelope.flap {
-            transform-origin: top;
-            transform: rotateX(180deg);
+
+        h2 .char {
+            min-height: 1.6em;
         }
-        
-        .envelope-content {
-            text-align: center;
-            color: #5a4a3a;
+
+        /* 流星效果 */
+        .shooting-star {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px white;
+            opacity: 0;
+            z-index: 4;
         }
-        
-        .envelope-heart {
-            font-size: 50px;
-            color: #e67e7e;
-            margin-bottom: 20px;
-            animation: beat 1s infinite alternate;
-        }
-        
-        @keyframes beat {
-            to { transform: scale(1.1); }
-        }
-        
-        .open-btn {
-            margin-top: 20px;
-            padding: 10px 25px;
-            background: #e67e7e;
+
+        /* 最终页面按钮 - 更透明 */
+        .final-btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, rgba(255, 105, 180, 0.8), rgba(255, 20, 147, 0.8));
             border: none;
-            border-radius: 20px;
+            border-radius: 30px;
             color: white;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        
-        .open-btn:hover {
-            background: #d46a6a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+        .final-btn.show {
+            opacity: 1;
+            transform: scale(1);
         }
-        
-        /* 信纸折痕效果 */
-        .fold-line {
+
+        .final-btn::before {
+            content: '';
             position: absolute;
-            height: 100%;
-            width: 2px;
-            background: rgba(0, 0, 0, 0.05);
-            left: 20px;
             top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .final-btn:hover::before {
+            left: 100%;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: #ff69b4;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 音乐自动播放提示 - 更透明 */
+        .music-tip {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #ff69b4;
+            font-size: 14px;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            padding: 8px;
+            border-radius: 20px;
+            width: fit-content;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .music-tip.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <div class="letter-container">
-        <!-- 信封 -->
-        <div class="envelope" id="envelope">
-            <div class="envelope-content">
-                <div class="envelope-heart">❤</div>
-                <h2>致我最亲爱的你</h2>
-                <button class="open-btn" onclick="openEnvelope()">打开信封</button>
-            </div>
-        </div>
-        
-        <!-- 页面1 -->
-        <div class="page" id="page1">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="date" id="page1-date"></div>
-            <div class="page-content">
-                <div class="greeting" id="page1-greeting"></div>
-                <div class="text-line" id="page1-text1"></div>
-            </div>
-        </div>
-        
-        <!-- 页面2 -->
-        <div class="page" id="page2">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page2-text1"></div>
-                <div class="text-line" id="page2-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面3 -->
-        <div class="page" id="page3">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page3-text1"></div>
-                <div class="text-line" id="page3-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面4 -->
-        <div class="page" id="page4">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page4-text1"></div>
-                <div class="text-line" id="page4-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面5 -->
-        <div class="page" id="page5">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page5-text1"></div>
-                <div class="text-line" id="page5-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面6 -->
-        <div class="page" id="page6">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page6-text1"></div>
-                <div class="text-line" id="page6-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面7 -->
-        <div class="page" id="page7">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page7-text1"></div>
-                <div class="text-line" id="page7-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面8 -->
-        <div class="page" id="page8">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page8-text1"></div>
-                <div class="text-line" id="page8-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面9 -->
-        <div class="page" id="page9">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page9-text1"></div>
-                <div class="text-line" id="page9-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面10 -->
-        <div class="page" id="page10">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="text-line" id="page10-text1"></div>
-                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
-                    <button class="final-btn" id="yes-btn" onclick="showResponse('yes')"></button>
-                    <button class="final-btn" id="no-btn" onclick="showResponse('no')"></button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 页面11 - 愿意 -->
-        <div class="page" id="page11">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="heart" id="page11-heart">❤</div>
-                <div class="text-line" id="page11-text1"></div>
-                <div class="text-line" id="page11-text2"></div>
-            </div>
-        </div>
-        
-        <!-- 页面12 - 考虑一下 -->
-        <div class="page" id="page12">
-            <div class="paper-texture"></div>
-            <div class="fold-line"></div>
-            <div class="page-content">
-                <div class="heart" id="page12-heart">❤</div>
-                <div class="text-line" id="page12-text1"></div>
-                <div class="text-line" id="page12-text2"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="music-control" onclick="toggleMusic()">
-        <span id="music-icon">♪</span>
-    </div>
-    
-    <!-- 修改这里使用本地音乐 -->
-    <audio id="bgMusic" loop>
-        <source src="致美丽的你.mp3" type="audio/mpeg">
-        <!-- 如果浏览器不支持MP3，可以添加其他格式 -->
-        <source src="music.ogg" type="audio/ogg">
-        您的浏览器不支持音频元素。
-    </audio>
-    
-    <script>
-        // 页面内容配置
-        const pageContents = {
-            1: {
-                date: getCurrentDate(),
-                greeting: "亲爱的",
-                text1: "我有些话想对你说..."
-            },
-            2: {
-                text1: "从遇见你的那一刻起",
-                text2: "我的心就不再属于我自己"
-            },
-            3: {
-                text1: "你的笑容像阳光",
-                text2: "照亮了我生活的每一个角落"
-            },
-            4: {
-                text1: "和你在一起的每一秒",
-                text2: "都是我生命中最美好的时光"
-            },
-            5: {
-                text1: "我想牵着你的手",
-                text2: "走过春夏秋冬，看遍世间美景"
-            },
-            6: {
-                text1: "你的眼睛里有星辰大海",
-                text2: "让我沉醉其中无法自拔"
-            },
-            7: {
-                text1: "你的声音是最动听的旋律",
-                text2: "在我心中不断回响"
-            },
-            8: {
-                text1: "我想每天醒来第一眼",
-                text2: "看到的就是你的笑脸"
-            },
-            9: {
-                text1: "我想和你一起",
-                text2: "创造属于我们的美好回忆"
-            },
-            10: {
-                text1: "你愿意成为我的女朋友吗？",
-                btnYes: "愿意",
-                btnNo: "考虑一下"
-            },
-            11: {
-                heart: "❤",
-                text1: "太开心了！",
-                text2: "我会用一生的时间来珍惜你 ❤"
-            },
-            12: {
-                heart: "❤",
-                text1: "我会耐心等待",
-                text2: "希望有一天能听到你肯定的答案"
-            }
-        };
+<div id="stars"></div>
+<div id="light-beam"></div>
 
-        let currentPage = 1;
-        const totalPages = 10;
-        let textAnimationTimeout;
-        let pageTimeout;
-        const bgMusic = document.getElementById('bgMusic');
-        const musicIcon = document.getElementById('music-icon');
-        let isPlaying = false;
-        let typingInterval = 80; // 每个字出现的时间间隔(毫秒)
-        let lineInterval = 500; // 每行之间的间隔(毫秒)
-        let pageDelay = 3000;   // 页面停留时间(毫秒)
-        
-        // 获取当前日期
-        function getCurrentDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            return `${year}年${month}月${day}日`;
+<div class="music-tip" id="musicTip">背景音乐自动播放中...</div>
+
+<div class="container">
+    <!-- 页面1 -->
+    <div class="page active" id="page1">
+        <div class="heart" id="page1-heart">🌹</div>
+        <h2 id="page1-title"></h2>
+        <div class="text-line" id="page1-text1"></div>
+    </div>
+
+    <!-- 页面2 -->
+    <div class="page" id="page2">
+        <div class="heart" id="page2-heart">🌹</div>
+        <div class="text-line" id="page2-text1"></div>
+        <div class="text-line" id="page2-text2"></div>
+    </div>
+
+    <!-- 页面3 -->
+    <div class="page" id="page3">
+        <div class="heart" id="page3-heart">🌹</div>
+        <div class="text-line" id="page3-text1"></div>
+        <div class="text-line" id="page3-text2"></div>
+    </div>
+
+    <!-- 页面4 -->
+    <div class="page" id="page4">
+        <div class="heart" id="page4-heart">🌹</div>
+        <div class="text-line" id="page4-text1"></div>
+        <div class="text-line" id="page4-text2"></div>
+    </div>
+
+    <!-- 页面5 -->
+    <div class="page" id="page5">
+        <div class="heart" id="page5-heart">🌹</div>
+        <div class="text-line" id="page5-text1"></div>
+        <div class="text-line" id="page5-text2"></div>
+    </div>
+
+    <!-- 页面6 -->
+    <div class="page" id="page6">
+        <div class="heart" id="page6-heart">🌹</div>
+        <div class="text-line" id="page6-text1"></div>
+        <div class="text-line" id="page6-text2"></div>
+    </div>
+
+    <!-- 页面7 -->
+    <div class="page" id="page7">
+        <div class="heart" id="page7-heart">🌹</div>
+        <div class="text-line" id="page7-text1"></div>
+        <div class="text-line" id="page7-text2"></div>
+    </div>
+
+    <!-- 页面8 -->
+    <div class="page" id="page8">
+        <div class="heart" id="page8-heart">🌹</div>
+        <div class="text-line" id="page8-text1"></div>
+        <div class="text-line" id="page8-text2"></div>
+    </div>
+
+    <!-- 页面9 -->
+    <div class="page" id="page9">
+        <div class="heart" id="page9-heart">🌹</div>
+        <div class="text-line" id="page9-text1"></div>
+        <div class="text-line" id="page9-text2"></div>
+    </div>
+
+    <!-- 页面10 -->
+    <div class="page" id="page10">
+        <div class="heart" id="page10-heart">🌹</div>
+        <h2 id="page10-title"></h2>
+        <div style="display: flex; gap: 15px; margin-top: 20px;">
+            <button class="final-btn" id="yes-btn" onclick="showResponse('yes')"></button>
+            <button class="final-btn" id="no-btn" onclick="showResponse('no')"></button>
+        </div>
+    </div>
+
+    <!-- 页面11 - 愿意 -->
+    <div class="page" id="page11">
+        <div class="heart" id="page11-heart">🌹</div>
+        <h2 id="page11-title"></h2>
+        <div class="text-line" id="page11-text1"></div>
+        <div class="text-line" id="page11-text2"></div>
+    </div>
+
+    <!-- 页面12 - 考虑一下 -->
+    <div class="page" id="page12">
+        <div class="heart" id="page12-heart">🌹</div>
+        <div class="text-line" id="page12-text1"></div>
+        <div class="text-line" id="page12-text2"></div>
+    </div>
+</div>
+
+<div class="music-control" onclick="toggleMusic()">
+    <span id="music-icon">♫</span>
+</div>
+
+<!-- 修改这里使用本地音乐 -->
+<audio id="bgMusic" loop>
+    <source src="致美丽的你.mp3" type="audio/mpeg">
+    <!-- 如果浏览器不支持MP3，可以添加其他格式 -->
+    <source src="music.ogg" type="audio/ogg">
+    您的浏览器不支持音频元素。
+</audio>
+
+<script>
+    // 页面内容配置
+    const pageContents = {
+        1: {
+            heart: "🌹",
+            title: "亲爱的",
+            text1: "我有些话想对你说...",
+            text2: ""
+        },
+        2: {
+            heart: "🌹",
+            text1: "从遇见你的那一刻起",
+            text2: "我的心就不再属于我自己"
+        },
+        3: {
+            heart: "🌹",
+            text1: "你的笑容像阳光",
+            text2: "照亮了我生活的每一个角落"
+        },
+        4: {
+            heart: "🌹",
+            text1: "和你在一起的每一秒",
+            text2: "都是我生命中最美好的时光"
+        },
+        5: {
+            heart: "🌹",
+            text1: "我想牵着你的手",
+            text2: "走过春夏秋冬，看遍世间美景"
+        },
+        6: {
+            heart: "🌹",
+            text1: "你的眼睛里有星辰大海",
+            text2: "让我沉醉其中无法自拔"
+        },
+        7: {
+            heart: "🌹",
+            text1: "你的声音是最动听的旋律",
+            text2: "在我心中不断回响"
+        },
+        8: {
+            heart: "🌹",
+            text1: "我想每天醒来第一眼",
+            text2: "看到的就是你的笑脸"
+        },
+        9: {
+            heart: "🌹",
+            text1: "我想和你一起",
+            text2: "创造属于我们的美好回忆"
+        },
+        10: {
+            heart: "🌹",
+            title: "你愿意成为我的女朋友吗？",
+            btnYes: "愿意",
+            btnNo: "考虑一下"
+        },
+        11: {
+            heart: "🌹",
+            title: "太开心了！",
+            text1: "我会用一生的时间来珍惜你",
+            text2: "爱你 🌹"
+        },
+        12: {
+            heart: "🌹",
+            text1: "我会耐心等待",
+            text2: "希望有一天能听到你肯定的答案"
         }
-        
-        // 打开信封
-        function openEnvelope() {
-            const envelope = document.getElementById('envelope');
-            envelope.classList.add('flap');
-            
+    };
+
+    let currentPage = 1;
+    const totalPages = 10;
+    let textAnimationTimeout;
+    let pageTimeout;
+    const bgMusic = document.getElementById('bgMusic');
+    const musicIcon = document.getElementById('music-icon');
+    const musicTip = document.getElementById('musicTip');
+    let isPlaying = false;
+    let typingInterval = 100;
+    let lineInterval = 500;
+    let pageDelay = 3000;
+
+    // 创建星空背景
+    function createStars() {
+        const stars = document.getElementById('stars');
+        const count = 200;
+
+        for (let i = 0; i < count; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.backgroundColor = 'white';
+            star.style.borderRadius = '50%';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.opacity = Math.random() * 0.8 + 0.2;
+            star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite alternate`;
+
+            stars.appendChild(star);
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+                @keyframes twinkle {
+                    0% { opacity: 0.2; }
+                    100% { opacity: ${Math.random() * 0.8 + 0.2}; }
+                }
+            `;
+        document.head.appendChild(style);
+    }
+
+    // 创建爱心气泡
+    function createBubbles() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '🌹';
+            }
+
+            document.body.appendChild(bubble);
+
             setTimeout(() => {
-                envelope.style.display = 'none';
-                document.getElementById('page1').classList.add('active');
-                showPageContent(1);
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    // 创建流星
+    function createShootingStars() {
+        setInterval(() => {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+
+            const startX = Math.random() * 100;
+            const startY = Math.random() * 30;
+            star.style.left = startX + 'vw';
+            star.style.top = startY + 'vh';
+
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                star.style.opacity = '1';
+                star.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 + 100}px)`;
+                star.style.transition = 'all 0.5s linear';
+
+                setTimeout(() => {
+                    star.style.opacity = '0';
+                    setTimeout(() => {
+                        star.remove();
+                    }, 1000);
+                }, 500);
+            }, 10);
+        }, 3000);
+    }
+
+    // 爱心爆炸特效
+    function createHeartExplosion() {
+        const x = Math.random() * 80 + 10;
+        const y = Math.random() * 80 + 10;
+
+        for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = '🌹';
+                heart.style.position = 'fixed';
+                heart.style.left = x + 'vw';
+                heart.style.top = y + 'vh';
+                heart.style.fontSize = '20px';
+                heart.style.color = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
+                heart.style.transform = 'scale(0)';
+                heart.style.transition = 'all 0.8s ease-out';
+                heart.style.zIndex = '5';
+                heart.style.pointerEvents = 'none';
+                heart.style.opacity = '0.8';
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.style.transform = `scale(2) translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+                    heart.style.opacity = '0';
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 800);
+                }, 10);
+            }, i * 100);
+        }
+    }
+
+    // 逐字显示文本
+    function typeWriter(element, text, callback) {
+        let i = 0;
+        element.innerHTML = '';
+
+        function type() {
+            if (i < text.length) {
+                const charSpan = document.createElement('span');
+                charSpan.className = 'char';
+                charSpan.textContent = text.charAt(i);
+                element.appendChild(charSpan);
+
+                setTimeout(() => {
+                    charSpan.classList.add('show');
+                }, 10);
+
+                i++;
+                setTimeout(type, typingInterval);
+            } else if (callback) {
+                callback();
+            }
+        }
+
+        type();
+    }
+
+    // 显示页面内容
+    function showPageContent(pageNum) {
+        const pageContent = pageContents[pageNum];
+        const page = document.getElementById(`page${pageNum}`);
+
+        const heart = page.querySelector('.heart');
+        if (heart && pageContent.heart) {
+            heart.innerHTML = pageContent.heart;
+            setTimeout(() => {
+                heart.classList.add('show');
+            }, 100);
+        }
+
+        const title = page.querySelector('h2');
+        if (title && pageContent.title) {
+            typeWriter(title, pageContent.title);
+        }
+
+        const text1 = page.querySelector('#page'+pageNum+'-text1');
+        if (text1 && pageContent.text1) {
+            setTimeout(() => {
+                typeWriter(text1, pageContent.text1, () => {
+                    const text2 = page.querySelector('#page'+pageNum+'-text2');
+                    if (text2 && pageContent.text2) {
+                        setTimeout(() => {
+                            typeWriter(text2, pageContent.text2, () => {
+                                if (pageNum < totalPages) {
+                                    pageTimeout = setTimeout(() => {
+                                        nextPage();
+                                    }, pageDelay);
+                                }
+                            });
+                        }, lineInterval);
+                    } else if (pageNum < totalPages) {
+                        pageTimeout = setTimeout(() => {
+                            nextPage();
+                        }, pageDelay);
+                    }
+                });
+            }, title ? 500 : 0);
+        }
+
+        const yesBtn = page.querySelector('#yes-btn');
+        if (yesBtn && pageContent.btnYes) {
+            typeWriter(yesBtn, pageContent.btnYes);
+            setTimeout(() => {
+                yesBtn.classList.add('show');
             }, 1000);
         }
-        
-        // 逐字显示文本
-        function typeWriter(element, text, callback) {
-            let i = 0;
-            element.innerHTML = ''; // 清空原有内容
-            
-            function type() {
-                if (i < text.length) {
-                    // 创建字符元素
-                    const charSpan = document.createElement('span');
-                    charSpan.className = 'char';
-                    charSpan.textContent = text.charAt(i);
-                    element.appendChild(charSpan);
-                    
-                    // 显示字符动画
-                    setTimeout(() => {
-                        charSpan.classList.add('show');
-                    }, 10);
-                    
-                    i++;
-                    setTimeout(type, typingInterval);
-                } else {
-                    // 文本显示完成，执行回调
-                    if (callback) callback();
-                }
-            }
-            
-            type();
+
+        const noBtn = page.querySelector('#no-btn');
+        if (noBtn && pageContent.btnNo) {
+            typeWriter(noBtn, pageContent.btnNo);
+            setTimeout(() => {
+                noBtn.classList.add('show');
+            }, 1200);
         }
-        
-        // 显示页面内容
-        function showPageContent(pageNum) {
-            const pageContent = pageContents[pageNum];
-            const page = document.getElementById(`page${pageNum}`);
-            
-            // 显示日期
-            const date = page.querySelector('.date');
-            if (date && pageContent.date) {
-                date.textContent = pageContent.date;
-            }
-            
-            // 显示问候语
-            const greeting = page.querySelector('.greeting');
-            if (greeting && pageContent.greeting) {
-                typeWriter(greeting, pageContent.greeting);
-            }
-            
-            // 显示爱心
-            const heart = page.querySelector('.heart');
-            if (heart && pageContent.heart) {
-                heart.innerHTML = pageContent.heart;
-                setTimeout(() => {
-                    heart.classList.add('show');
-                }, 100);
-            }
-            
-            // 显示文本行
-            const text1 = page.querySelector('#page'+pageNum+'-text1');
-            if (text1 && pageContent.text1) {
-                setTimeout(() => {
-                    typeWriter(text1, pageContent.text1, () => {
-                        const text2 = page.querySelector('#page'+pageNum+'-text2');
-                        if (text2 && pageContent.text2) {
-                            setTimeout(() => {
-                                typeWriter(text2, pageContent.text2, () => {
-                                    // 最后一页不自动翻页
-                                    if (pageNum < totalPages) {
-                                        pageTimeout = setTimeout(() => {
-                                            nextPage();
-                                        }, pageDelay);
-                                    }
-                                });
-                            }, lineInterval);
-                        } else if (pageNum < totalPages) {
-                            pageTimeout = setTimeout(() => {
-                                nextPage();
-                            }, pageDelay);
-                        }
-                    });
-                }, greeting ? 500 : 0);
-            }
-            
-            // 显示按钮
-            const yesBtn = page.querySelector('#yes-btn');
-            if (yesBtn && pageContent.btnYes) {
-                typeWriter(yesBtn, pageContent.btnYes);
-                setTimeout(() => {
-                    yesBtn.classList.add('show');
-                }, 1000);
-            }
-            
-            const noBtn = page.querySelector('#no-btn');
-            if (noBtn && pageContent.btnNo) {
-                typeWriter(noBtn, pageContent.btnNo);
-                setTimeout(() => {
-                    noBtn.classList.add('show');
-                }, 1200);
-            }
-        }
-        
-        // 下一页
-        function nextPage() {
-            if (currentPage < totalPages) {
-                const currentPageEl = document.getElementById(`page${currentPage}`);
-                currentPageEl.classList.add('exit');
-                
-                setTimeout(() => {
-                    currentPageEl.classList.remove('active', 'exit');
-                    currentPage++;
-                    const nextPageEl = document.getElementById(`page${currentPage}`);
-                    nextPageEl.classList.add('active');
-                    showPageContent(currentPage);
-                }, 1000);
-            }
-        }
-        
-        // 显示回应
-        function showResponse(response) {
+    }
+
+    // 下一页
+    function nextPage() {
+        if (currentPage < totalPages) {
             const currentPageEl = document.getElementById(`page${currentPage}`);
             currentPageEl.classList.add('exit');
-            
+
             setTimeout(() => {
                 currentPageEl.classList.remove('active', 'exit');
-                if (response === 'yes') {
-                    currentPage = totalPages + 1;
-                } else {
-                    currentPage = totalPages + 2;
-                }
-                const responsePageEl = document.getElementById(`page${currentPage}`);
-                responsePageEl.classList.add('active');
+                currentPage++;
+                const nextPageEl = document.getElementById(`page${currentPage}`);
+                nextPageEl.classList.add('active');
                 showPageContent(currentPage);
+
+                if (currentPage % 2 === 0) {
+                    createHeartExplosion();
+                }
+                if (currentPage % 3 === 0) {
+                    createShootingStars();
+                }
             }, 1000);
         }
-        
-        // 切换音乐
-        function toggleMusic() {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicIcon.textContent = '♪';
-            } else {
-                bgMusic.play().catch(e => {
-                    alert('请点击确认后，再次点击音乐按钮播放');
-                });
-                musicIcon.textContent = '♫';
-            }
-            isPlaying = !isPlaying;
-        }
-        
-        // 初始化
-        window.onload = function() {
-            // 微信中可能需要用户交互后才能播放音乐
-            document.addEventListener('touchstart', function() {
-                if (!bgMusic.played) {
-                    bgMusic.play().then(() => {
-                        bgMusic.pause();
-                        isPlaying = false;
-                        musicIcon.textContent = '♪';
-                    }).catch(() => {});
+    }
+
+    // 显示回应
+    function showResponse(response) {
+        const currentPageEl = document.getElementById(`page${currentPage}`);
+        currentPageEl.classList.add('exit');
+
+        setTimeout(() => {
+            currentPageEl.classList.remove('active', 'exit');
+            if (response === 'yes') {
+                currentPage = totalPages + 1;
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        createHeartExplosion();
+                    }, i * 150);
                 }
-            }, { once: true });
-        };
-    </script>
+
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createShootingStars();
+                    }, i * 300);
+                }
+            } else {
+                currentPage = totalPages + 2;
+            }
+            const responsePageEl = document.getElementById(`page${currentPage}`);
+            responsePageEl.classList.add('active');
+            showPageContent(currentPage);
+        }, 1000);
+    }
+
+    // 切换音乐
+    function toggleMusic() {
+        if (isPlaying) {
+            bgMusic.pause();
+            musicIcon.textContent = '♪';
+        } else {
+            bgMusic.play();
+            musicIcon.textContent = '♫';
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // 初始化音乐自动播放
+    function initMusic() {
+        const playPromise = bgMusic.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isPlaying = true;
+                musicIcon.textContent = '♫';
+                showMusicTip();
+            }).catch(error => {
+                musicTip.textContent = '点击页面任意处播放音乐';
+                showMusicTip();
+
+                document.body.addEventListener('click', function() {
+                    bgMusic.play();
+                    isPlaying = true;
+                    musicIcon.textContent = '♫';
+                    hideMusicTip();
+                }, { once: true });
+            });
+        }
+    }
+
+    // 显示音乐提示
+    function showMusicTip() {
+        musicTip.classList.add('show');
+        setTimeout(() => {
+            musicTip.classList.remove('show');
+        }, 3000);
+    }
+
+    // 隐藏音乐提示
+    function hideMusicTip() {
+        musicTip.classList.remove('show');
+    }
+
+    // 初始化
+    window.onload = function() {
+        createStars();
+        createBubbles();
+        createShootingStars();
+
+        initMusic();
+        showPageContent(1);
+    };
+</script>
 </body>
 </html>
