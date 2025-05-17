@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>给特别的你</title>
+    <title>给最特别的你</title>
     <style>
         body {
             margin: 0;
@@ -53,7 +53,7 @@
             backface-visibility: hidden;
             box-shadow: 0 0 20px rgba(255, 105, 180, 0.3); /* 更柔和的阴影 */
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px); /* 更强的模糊效果 */
+            backdrop-filter: blur(0px); /* 更强的模糊效果 */
         }
 
         .page.active {
@@ -316,8 +316,6 @@
 <div id="stars"></div>
 <div id="light-beam"></div>
 
-<div class="music-tip" id="musicTip">背景音乐自动播放中...</div>
-
 <div class="container">
     <!-- 页面1 -->
     <div class="page active" id="page1">
@@ -425,7 +423,7 @@
     const pageContents = {
         1: {
             heart: "🌹",
-            title: "亲爱的",
+            title: "小青：",
             text1: "我有些话想对你说...",
             text2: ""
         },
@@ -471,15 +469,15 @@
         },
         10: {
             heart: "🌹",
-            title: "你愿意成为我的女朋友吗？",
-            btnYes: "愿意",
+            title: "希望你不要抗拒我，给我一个机会💓",
+            btnYes: "给个机会",
             btnNo: "考虑一下"
         },
         11: {
             heart: "🌹",
-            title: "太开心了！",
+            title: "太开心了✨",
             text1: "我会用一生的时间来珍惜你",
-            text2: "爱你 🌹"
+            text2: "爱你🌹"
         },
         12: {
             heart: "🌹",
@@ -553,7 +551,7 @@
                 bubble.style.fontSize = size + 'px';
                 bubble.style.lineHeight = size + 'px';
                 bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
-                bubble.innerHTML = '🌹';
+                bubble.innerHTML = '💕🌹';
             }
 
             document.body.appendChild(bubble);
@@ -777,26 +775,35 @@
 
     // 初始化音乐自动播放
     function initMusic() {
+        // 设置音频循环
+        bgMusic.loop = true;
+
+        // 尝试自动播放
         const playPromise = bgMusic.play();
 
         if (playPromise !== undefined) {
             playPromise.then(() => {
+                // 自动播放成功
                 isPlaying = true;
                 musicIcon.textContent = '♫';
-                showMusicTip();
+                hideMusicTip();
             }).catch(error => {
-                musicTip.textContent = '点击页面任意处播放音乐';
                 showMusicTip();
 
+                // 设置点击事件监听器（只执行一次）
                 document.body.addEventListener('click', function() {
-                    bgMusic.play();
-                    isPlaying = true;
-                    musicIcon.textContent = '♫';
-                    hideMusicTip();
+                    bgMusic.play().then(() => {
+                        isPlaying = true;
+                        musicIcon.textContent = '♫';
+                        hideMusicTip();
+                    });
                 }, { once: true });
             });
         }
     }
+
+    // 确保在DOM加载完成后调用
+    document.addEventListener('DOMContentLoaded', initMusic);
 
     // 显示音乐提示
     function showMusicTip() {
