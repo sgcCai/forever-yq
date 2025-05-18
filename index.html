@@ -316,6 +316,8 @@
 <div id="stars"></div>
 <div id="light-beam"></div>
 
+<div class="music-tip" id="musicTip">BGM自动播放中...</div>
+
 <div class="container">
     <!-- 页面1 -->
     <div class="page active" id="page1">
@@ -366,43 +368,29 @@
         <div class="text-line" id="page7-text2"></div>
     </div>
 
-    <!-- 页面8 -->
+    <!-- 页面8-->
     <div class="page" id="page8">
         <div class="heart" id="page8-heart">🌹</div>
-        <div class="text-line" id="page8-text1"></div>
-        <div class="text-line" id="page8-text2"></div>
-    </div>
-
-    <!-- 页面9 -->
-    <div class="page" id="page9">
-        <div class="heart" id="page9-heart">🌹</div>
-        <div class="text-line" id="page9-text1"></div>
-        <div class="text-line" id="page9-text2"></div>
-    </div>
-
-    <!-- 页面10 -->
-    <div class="page" id="page10">
-        <div class="heart" id="page10-heart">🌹</div>
-        <h2 id="page10-title"></h2>
+        <h2 id="page8-title"></h2>
         <div style="display: flex; gap: 15px; margin-top: 20px;">
             <button class="final-btn" id="yes-btn" onclick="showResponse('yes')"></button>
             <button class="final-btn" id="no-btn" onclick="showResponse('no')"></button>
         </div>
     </div>
 
-    <!-- 页面11 - 愿意 -->
-    <div class="page" id="page11">
-        <div class="heart" id="page11-heart">🌹</div>
-        <h2 id="page11-title"></h2>
-        <div class="text-line" id="page11-text1"></div>
-        <div class="text-line" id="page11-text2"></div>
+    <!-- 页面9 - 愿意 -->
+    <div class="page" id="page9">
+        <div class="heart" id="page9-heart">🌹</div>
+        <h2 id="page9-title"></h2>
+        <div class="text-line" id="page9-text1"></div>
+        <div class="text-line" id="page9-text2"></div>
     </div>
 
-    <!-- 页面12 - 考虑一下 -->
-    <div class="page" id="page12">
-        <div class="heart" id="page12-heart">🌹</div>
-        <div class="text-line" id="page12-text1"></div>
-        <div class="text-line" id="page12-text2"></div>
+    <!-- 页面10 - 考虑一下 -->
+    <div class="page" id="page10">
+        <div class="heart" id="page10-heart">🌹</div>
+        <div class="text-line" id="page10-text1"></div>
+        <div class="text-line" id="page10-text2"></div>
     </div>
 </div>
 
@@ -422,71 +410,62 @@
     const pageContents = {
         1: {
             heart: "☺",
-            title: "小青：",
-            text1: "我有些话想对你说...",
+            title: "",
+            text1: "小青，我有些心里话想对你说...",
             text2: ""
         },
         2: {
-            heart: "🌹",
-            text1: "从遇见你的那一刻起",
-            text2: "我的心就不再属于我自己"
+            heart: "🌹🌹🌹",
+            text1: "最近，我重新翻看了我们之前的所有的聊天记录。",
+            text2: "发现我错过了那么多重要的细节。现在回想起来，我才意识到自己当时有多迟钝（大直男），明白为什么后来你会对我有些疏远。"
         },
         3: {
-            heart: "🌹",
-            text1: "你的笑容像阳光",
-            text2: "照亮了我生活的每一个角落"
+            heart: "🌹🌹🌹",
+            text1: "当时你在干活忙不过来，打算让我去帮忙下，你至少暗示了我三次，我当时居然没有留意到（我真笨呀）",
+            text2: "我还说没有车没法现在过去帮忙，下次干活时叫我一起（现在想想真是无语，应该包车都要过去的）。不知道当时你就是最需要我去帮忙的时候🥹（因为这事也让我确定需要尽快买辆车）"
+
         },
         4: {
-            heart: "🌹",
-            text1: "和你在一起的每一秒",
-            text2: "都是我生命中最美好的时光"
+            heart: "🌹🌹🌹",
+            text1: "后面你慢慢不搭理我的时候，我都不知道是什么情况（的确笨呀）。",
+            text2: "我平常是非常有边界感的，你应该可以感觉得出来，我不会跟你聊一些乱七八糟的东西，我当时想得也多，也怕打扰到你，就放弃没聊了（这脑子）。本来当时五一就是回来见你的，可我却因为自己的犹豫和笨拙，错过了和你好好相处的机会。"
         },
         5: {
-            heart: "🌹",
-            text1: "我想牵着你的手",
-            text2: "走过春夏秋冬，看遍世间美景"
+            heart: "🌹🌹🌹",
+            text1: "后来我经常会想",
+            text2: "如果当时我能再稍微细心一点、主动一点，现在会不会不一样？"
         },
         6: {
-            heart: "🌹",
-            text1: "你的眼睛里有星辰大海",
-            text2: "让我沉醉其中无法自拔"
+            heart: "🌹🌹🌹",
+            text1: "直到这个五一在天柱偶遇你的时候，我当时楞了一下（老天在给我机会）。",
+            text2: "记得跟你一起去天柱玩，当时坐在车上紧张得不行，心也是怦怦跳，还会脸红（比较慢热）；以前在兰田你有剥板栗给我（当时非常开心），去天柱买小吃也会递吃的给我（开心）。我才意识到，你才是我值得去追的人，我就是个感情白痴，差点因为自己的愚蠢把你弄丢了"
         },
         7: {
-            heart: "🌹",
-            text1: "这个五一在天柱不经意遇见你时，我心跳都漏了一拍。",
-            text2: "想起以前在兰田你剥板栗给我，在天柱分享小吃给我的样子，我才意识到，我是个感情白痴，差点因为自己的愚蠢把你弄丢了"
+            heart: "🌹🌹🌹",
+            text1: "这次我不想再退缩了，我想重新走近你。",
+            text2: "我要变得更细心、更主动、更坚定。你值得被好好珍惜，而我，想成为那个珍惜你的人。"
         },
         8: {
-            heart: "🌹",
-            text1: "我想每天醒来第一眼",
-            text2: "看到的就是你的笑脸"
-        },
-        9: {
-            heart: "🌹",
-            text1: "我知道自己不够细心，也不够勇敢",
-            text2: "这次我不想再退缩了。我想重新走近你。"
-        },
-        10: {
-            heart: "🌹",
-            title: "希望你不要反感我、抗拒我，给我一个机会走近你",
-            btnYes: "给笨蛋一个机会",
+            heart: "🌹🌹🌹",
+            title: "我不敢奢求什么，希望你不要反感我，给我一个走近你的机会",
+            btnYes: "给无语的笨蛋一个机会☺️",
             btnNo: "考虑一下"
         },
-        11: {
-            heart: "🎊🎉🎉🎉🎊",
+        9: {
+            heart: "🎊🎉💐🎉🎊",
             title: "小青，我太开心了",
             text1: "我再也不会弄丢你了",
             text2: "我端午回来，不见不散哈"
         },
-        12: {
+        10: {
             heart: "🪻🪻🪻",
-            text1: "有一点点小失落",
-            text2: "但我会努力的，不骄不躁，耐心等待。。。"
+            text1: "小青，我有一点点小失落",
+            text2: "我会努力的，不骄不躁，耐心等待（不要反感我🥹）。。。"
         }
     };
 
     let currentPage = 1;
-    const totalPages = 10;
+    const totalPages = 8;
     let textAnimationTimeout;
     let pageTimeout;
     const bgMusic = document.getElementById('bgMusic');
