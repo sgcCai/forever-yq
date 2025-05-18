@@ -415,14 +415,13 @@
     <source src="致美丽的你.mp3" type="audio/mpeg">
     <!-- 如果浏览器不支持MP3，可以添加其他格式 -->
     <source src="music.ogg" type="audio/ogg">
-    您的浏览器不支持音频元素。
 </audio>
 
 <script>
     // 页面内容配置
     const pageContents = {
         1: {
-            heart: "🌹",
+            heart: "☺",
             title: "小青：",
             text1: "我有些话想对你说...",
             text2: ""
@@ -454,8 +453,8 @@
         },
         7: {
             heart: "🌹",
-            text1: "你的声音是最动听的旋律",
-            text2: "在我心中不断回响"
+            text1: "这个五一在天柱不经意遇见你时，我心跳都漏了一拍。",
+            text2: "想起以前在兰田你剥板栗给我，在天柱分享小吃给我的样子，我才意识到，我是个感情白痴，差点因为自己的愚蠢把你弄丢了"
         },
         8: {
             heart: "🌹",
@@ -464,25 +463,25 @@
         },
         9: {
             heart: "🌹",
-            text1: "我想和你一起",
-            text2: "创造属于我们的美好回忆"
+            text1: "我知道自己不够细心，也不够勇敢",
+            text2: "这次我不想再退缩了。我想重新走近你。"
         },
         10: {
             heart: "🌹",
-            title: "希望你不要抗拒我，给我一个机会💓",
-            btnYes: "给个机会",
+            title: "希望你不要反感我、抗拒我，给我一个机会走近你",
+            btnYes: "给笨蛋一个机会",
             btnNo: "考虑一下"
         },
         11: {
-            heart: "🌹",
-            title: "太开心了✨",
-            text1: "我会用一生的时间来珍惜你",
-            text2: "爱你🌹"
+            heart: "🎊🎉🎉🎉🎊",
+            title: "小青，我太开心了",
+            text1: "我再也不会弄丢你了",
+            text2: "我端午回来，不见不散哈"
         },
         12: {
-            heart: "🌹",
-            text1: "我会耐心等待",
-            text2: "希望有一天能听到你肯定的答案"
+            heart: "🪻🪻🪻",
+            text1: "有一点点小失落",
+            text2: "但我会努力的，不骄不躁，耐心等待。。。"
         }
     };
 
@@ -551,9 +550,237 @@
                 bubble.style.fontSize = size + 'px';
                 bubble.style.lineHeight = size + 'px';
                 bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
-                bubble.innerHTML = '💕🌹';
+                bubble.innerHTML = '💕';
             }
 
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    // 创建爱心气泡
+    function createBubbles1() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '🌹';
+            }
+
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    function createBubbles2() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '💖';
+            }
+
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    function createBubbles3() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '🎈';
+            }
+
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    function createBubbles4() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '🪻';
+            }
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    function createBubbles5() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '🍀';
+            }
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    function createBubbles6() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '☘️';
+            }
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 15000);
+        }, 800);
+    }
+
+    function createBubbles7() {
+        setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const size = Math.random() * 30 + 20;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.bottom = '-50px';
+            bubble.style.opacity = '0';
+            bubble.style.animationDuration = Math.random() * 10 + 10 + 's';
+            bubble.style.animationDelay = Math.random() * 2 + 's';
+
+            if (Math.random() > 0.5) {
+                bubble.style.borderRadius = '50%';
+                bubble.style.backgroundColor = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.3)`;
+            } else {
+                bubble.style.background = 'none';
+                bubble.style.fontSize = size + 'px';
+                bubble.style.lineHeight = size + 'px';
+                bubble.style.color = `rgba(255, ${Math.floor(Math.random() * 105 + 150)}, ${Math.floor(Math.random() * 180 + 75)}, 0.6)`;
+                bubble.innerHTML = '🌸️';
+            }
             document.body.appendChild(bubble);
 
             setTimeout(() => {
@@ -590,7 +817,7 @@
         }, 3000);
     }
 
-    // 爱心爆炸特效
+    // 爆炸特效
     function createHeartExplosion() {
         const x = Math.random() * 80 + 10;
         const y = Math.random() * 80 + 10;
@@ -598,7 +825,7 @@
         for (let i = 0; i < 10; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
-                heart.innerHTML = '🌹';
+                heart.innerHTML = '💐';
                 heart.style.position = 'fixed';
                 heart.style.left = x + 'vw';
                 heart.style.top = y + 'vh';
@@ -788,6 +1015,7 @@
                 musicIcon.textContent = '♫';
                 hideMusicTip();
             }).catch(error => {
+                musicTip.textContent = '小青，BGM爆炸了，请点击播放音乐哈😁';
                 showMusicTip();
 
                 // 设置点击事件监听器（只执行一次）
@@ -822,6 +1050,13 @@
     window.onload = function() {
         createStars();
         createBubbles();
+        createBubbles1();
+        createBubbles2();
+        createBubbles3();
+        createBubbles4();
+        createBubbles5();
+        createBubbles6();
+        createBubbles7();
         createShootingStars();
 
         initMusic();
